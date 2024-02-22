@@ -96,12 +96,20 @@ if __name__ == "__main__":
     print(f"Log File: {LogFileName}")
     LogFile = open(LogFileName,"x")
     LogFile.write(f"[BEGIN][{LogFileName}]: {VERSION}{VERSIONATTACH}\n")
-    LogFile.close()
     try:
         print("Running Version Check (May take a minuite)")
-        HttpConnection = http.client.HTTPConnection("", timeout=60)
+        Host = "raw.githubusercontent.com"
+        HttpConnection = http.client.HTTPConnection(Host, timeout=60)
+        HttpConnection.request("GET","/connor33341/TCP-Message/main/latest.txt", headers={"Host":Host})
+        Response = HttpConnection.getresponse()
+        if (VERSION != Response.read()):
+            print(f"Version out of date, please update at https://github.com/connor33341/TCP-Message/ [{VERSION}<{Response.read()}]")
+            LogFile.write(f"[OUTDATED][{VERSION}][{Response.read()}]: Please update at https://github.com/connor33341/TCP-Message/")
+        else:
+            print("Version up to date")    
     except Exception as Error:
         print(f"Version Error: {Error}")
+    LogFile.close()
     Port = input("Host Port (Press enter to use default): ")
     Port = Port or DefaultPort
     try:
