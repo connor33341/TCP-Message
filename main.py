@@ -1,8 +1,9 @@
 import socket
 import uuid
+import http.client
 from threading import Thread
 """
-    Authors: Connor W
+    Authors: Connor W (connor33341)
     Purpose: Simple Proof of concept using TCP requests
     Build: 1/14/22
     PythonVersion: 3.11.8
@@ -25,7 +26,8 @@ serversocket.listen(5)
     ct.run()
 """
 DefaultPort = "8080"
-VERSION = "1.2 (1/14/22 BUILD) (3.11.8 LV) (LISENCE: MIT)"
+VERSION = "1.2"
+VERSIONATTACH = " (1/14/22 BUILD) (3.11.8 LV) (LISENCE: MIT)"
 class MessageServer:
     def __init__(self,Port,LogFile):
         self.Port = Port
@@ -93,8 +95,13 @@ if __name__ == "__main__":
     LogFileName = "logs/"+str(uuid.uuid4())
     print(f"Log File: {LogFileName}")
     LogFile = open(LogFileName,"x")
-    LogFile.write(f"[BEGIN][{LogFileName}]\n")
+    LogFile.write(f"[BEGIN][{LogFileName}]: {VERSION}{VERSIONATTACH}\n")
     LogFile.close()
+    try:
+        print("Running Version Check (May take a minuite)")
+        HttpConnection = http.client.HTTPConnection("", timeout=60)
+    except Exception as Error:
+        print(f"Version Error: {Error}")
     Port = input("Host Port (Press enter to use default): ")
     Port = Port or DefaultPort
     try:
