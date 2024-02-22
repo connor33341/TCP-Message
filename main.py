@@ -26,7 +26,9 @@ serversocket.listen(5)
     ct.run()
 """
 DefaultPort = "8080"
-VERSION = "1.2"
+VERSION = ""
+with open("latest.txt","r") as Latest:
+    VERSION = Latest.readline()
 VERSIONATTACH = " (1/14/22 BUILD) (3.11.8 LV) (LISENCE: MIT)"
 class MessageServer:
     def __init__(self,Port,LogFile):
@@ -102,7 +104,8 @@ if __name__ == "__main__":
         HttpConnection = http.client.HTTPConnection(Host, timeout=60)
         HttpConnection.request("GET","/connor33341/TCP-Message/main/latest.txt", headers={"Host":Host})
         Response = HttpConnection.getresponse()
-        ReadResponse = b""+Response.read()
+        ReadResponse = str(Response.read().decode())
+        #ReadResponse = b""+Response.read() # Decode bytes
         if (VERSION != ReadResponse):
             print(f"Version out of date, please update at https://github.com/connor33341/TCP-Message/ [{VERSION}<{ReadResponse}]")
             LogFile.write(f"[OUTDATED][{VERSION}][{ReadResponse}]: Please update at https://github.com/connor33341/TCP-Message/")
