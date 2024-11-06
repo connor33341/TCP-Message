@@ -1,0 +1,5 @@
+[BEGIN][logs/481ce228-0661-474a-87a5-c78d571a830a]: 1.5
+ (1/14/22 BUILD) (3.11.8 LV) (LISENCE: MIT)
+[OUTDATED][1.5
+][]: Please update at https://github.com/connor33341/TCP-Message/[SENT][localhost:8080]: hello
+[SEND-ERR][:8080]: [Errno 106] Transport endpoint is already connected

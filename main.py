@@ -1,7 +1,9 @@
 import socket
 import uuid
 import http.client
+import asyncio
 from threading import Thread
+#from multiprocessing import Process
 """
     Authors: Connor W (connor33341)
     Purpose: Simple Proof of concept using TCP requests
@@ -47,17 +49,19 @@ class MessageServer:
         self.Socket.listen(5)
         while self.Running:
             (ClientSocket, Address) = self.Socket.accept()
+            Message = self.Socket.recv(2048).decode("utf-8")
             Name = Address
             Key = self.SearchHosts(Address)
             if (Key):
                 Name = Key[1]
             else:
                 Name = input(f"Enter a name for host ${Address}: ")
-                self.Hosts[len(self.Hosts)+1] = [Address,Name]
+                #self.Hosts[len(self.Hosts)+1] = [Address,Name]
+                self.Hosts.append([Address,Name])
             Accept = input(f"Accept Message from: ${Name}? [YES:NO]: ")
             if (Accept.lower()=="yes"):
                 print("Connection Accepted")
-                Message = self.Socket.recv(2048).decode("utf-8")
+                #Message = self.Socket.recv(2048).decode("utf-8")
                 print(f"{Name}: {Message}")
                 with open(self.Log,"a") as LogFile:
                     LogFile.write(f"[RECV][{Address}:{self.Port}][{Name}]: {Message}\n")
@@ -66,6 +70,7 @@ class MessageServer:
                     raise RuntimeError("Device recived end cmd")
             else:
                 print("Connection Ended")
+            ClientSocket.close()
         print("ServerSocket Closed")
         self.Socket.close()
 class MessageClient:
@@ -77,7 +82,8 @@ class MessageClient:
     def Send(self):
         while self.Running:
             try:
-                Address = input("Device Address: ")
+                #await asyncio.sleep(4)
+                Address = input("Device Address: ") or ""
                 Message = input("Message: ")
                 self.Socket.connect((Address,self.Port))
                 self.Socket.send(Message.encode("utf-8"))
@@ -145,5 +151,5 @@ if __name__ == "__main__":
             print(f"ClientHandle Error: {Error}")
     ClientThread = Thread(target=ClientHandle)
     ServerThread = Thread(target=ServerHandle)
-    ClientThread.run()
-    ServerThread.run()
+    ClientThread.start()
+    ServerThread.start()

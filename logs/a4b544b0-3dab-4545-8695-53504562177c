@@ -1,0 +1,6 @@
+[BEGIN][logs/a4b544b0-3dab-4545-8695-53504562177c]: 1.5
+ (1/14/22 BUILD) (3.11.8 LV) (LISENCE: MIT)
+[OUTDATED][1.5
+][]: Please update at https://github.com/connor33341/TCP-Message/[SEND-ERR][https://vigilant-couscous-gj4xrxpg55rc7xj-8080.app.github.dev:8080]: [Errno -2] Name or service not known
+[SEND-ERR][0:8080]: [Errno 111] Connection refused
+[SEND-ERR][localhost:8080]: [Errno 111] Connection refused

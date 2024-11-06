@@ -1,0 +1,6 @@
+[BEGIN][logs/ee32e655-7f34-40e8-a1e2-ccccfa7d33a3]: 1.5
+ (1/14/22 BUILD) (3.11.8 LV) (LISENCE: MIT)
+[OUTDATED][1.5
+][]: Please update at https://github.com/connor33341/TCP-Message/[SENT][localhost:8080]: hello
+[SEND-ERR][a:8080]: [Errno -2] Name or service not known
+[SEND-ERR][localhost:8080]: [Errno 106] Transport endpoint is already connected
